@@ -1,15 +1,13 @@
-﻿using UnityEngine;
+﻿using NUnit.Framework;
+using UnityEngine;
 using System.Collections;
 
-public class ShapeTest : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+[TestFixture]
+public class ShapeTest
+{
+    [Test]
+    public void CreateShapeWithID()
+    {
+        
+    }
 }
