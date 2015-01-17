@@ -87,11 +87,10 @@ public class ShapeFactory : MonoBehaviour
 
     private GameObject CreateSquareAndAsChild(Shape shape, Vector2 position)
     {
-        var square = Instantiate(SquarePrefab) as GameObject;
-        square.transform.SetParent(shape.transform, false);
-        square.transform.localPosition = position;
-        shape.Squares.Add(square.GetComponent<Square>());
-        return square;
+        var squareGo = Instantiate(SquarePrefab) as GameObject;
+        var square = squareGo.GetComponent<Square>();
+        shape.AddSquare(square, position);
+        return squareGo;
     }
 
     public Shape CreateRandom()

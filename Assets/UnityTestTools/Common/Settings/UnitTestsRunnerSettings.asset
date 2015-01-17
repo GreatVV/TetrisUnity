@@ -11,12 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a24a0b0a24461a4ab99853f8b145e5c, type: 3}
   m_Name: UnitTestsRunnerSettings
   m_EditorClassIdentifier: 
-  optionsFoldout: 0
+  optionsFoldout: 1
   filtersFoldout: 0
   runOnRecompilation: 0
   horizontalSplit: 1
-  autoSaveSceneBeforeRun: 0
-  runTestOnANewScene: 0
+  autoSaveSceneBeforeRun: 1
+  runTestOnANewScene: 1
   categoriesMask: 0
   testFilter: 
   showFailed: 1

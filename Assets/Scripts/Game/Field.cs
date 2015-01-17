@@ -33,21 +33,31 @@ public class Field : MonoBehaviour
     {
         var currentPosition = ActiveShape.transform.position;
         var newPosition = currentPosition + Vector3.down * Time.deltaTime * Velocity;
-        
-        if (CanMove(ActiveShape, newPosition))
+
+        if (CanMove(ActiveShape, newPosition, this))
+        {
+            ActiveShape.transform.position = newPosition;
+        }
+        else
         {
             Squares.AddRange(ActiveShape.Squares);
             CreateNewShape();
         }
     }
 
-    public static bool CanMove(Shape shape, Vector3 newPosition)
+    public static bool CanMove(Shape shape, Vector3 newPosition, Field field)
     {
         var currentPosition = shape.transform.position;
 
         //два условия остановки: нижняя граница поля, снизу есть клетки
         //lowerBondary
+        if (newPosition.y + shape.MinY < field.Position.y)
+        {
+            return false;
+        }
+
+
         //hasSquares
-        return false;
+        return true;
     }
 }

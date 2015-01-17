@@ -3,7 +3,9 @@ using System.Collections;
 
 public class Square : MonoBehaviour {
 
-	// Use this for initialization
+    public Vector2 Size = Vector2.one;
+
+    // Use this for initialization
 	void Start () {
 	
 	}
@@ -14,4 +16,16 @@ public class Square : MonoBehaviour {
 	   
 	
 	}
+
+    public Vector2 Position
+    {
+        get
+        {
+            return transform.position;
+        }
+        set
+        {
+            transform.position = value;
+        }
+    }
 }

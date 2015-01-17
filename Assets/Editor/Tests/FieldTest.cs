@@ -7,29 +7,28 @@ public class FieldTest
     [Test]
     public void CanMoveLowerBoundary()
     {
-        var field = CreateField();
-        field.Size = Vector2.one*2;
-        field.Position = Vector2.zero;
-
+        var field = CreateField2x2();
         var shape = CreateShape();
+        
         shape.transform.position = new Vector3(0,1);
         
         var nextPosition = new Vector2(0, -1);
-        
-        var canMove = Field.CanMove(shape, nextPosition);
+
+        var canMove = Field.CanMove(shape, nextPosition, field);
 
         Assert.IsFalse(canMove);
-
     }
+
     private Shape CreateShape()
     {
-        var shapeFactory = Object.FindObjectOfType<ShapeFactory>();
-        return shapeFactory.CreateSquare();
+        return new GameObject("Shape", typeof (Shape)).GetComponent<Shape>();
     }
 
-    private Field CreateField()
+    private Field CreateField2x2()
     {
-        var field = Object.FindObjectOfType<Field>();
+        var field = new GameObject("Field", typeof (Field)).GetComponent<Field>();
+        field.Size = Vector2.one * 2;
+        field.Position = Vector2.zero;
         return field;
     }
 }
