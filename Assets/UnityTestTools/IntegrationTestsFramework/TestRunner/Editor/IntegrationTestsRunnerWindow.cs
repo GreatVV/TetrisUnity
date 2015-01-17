@@ -13,7 +13,7 @@ namespace UnityTest
         #region GUI Contents
         private readonly GUIContent m_GUIOptionsHideLabel = new GUIContent("Hide", Icons.GearImg);
         private readonly GUIContent m_GUIOptionsShowLabel = new GUIContent("Options", Icons.GearImg);
-        private readonly GUIContent m_GUICreateNewTest = new GUIContent(Icons.PlusImg, "Create new test");
+        private readonly GUIContent m_GUICreateNewTest = new GUIContent(Icons.PlusImg, "CreateSquare new test");
         private readonly GUIContent m_GUIRunSelectedTests = new GUIContent(Icons.RunImg, "Run selected test(s)");
         private readonly GUIContent m_GUIRunAllTests = new GUIContent(Icons.RunAllImg, "Run all tests");
         private readonly GUIContent m_GUIAdvancedFilterShow = new GUIContent("Advanced");

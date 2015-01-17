@@ -1,21 +1,20 @@
 ﻿using NUnit.Framework;
+using UnityEngine;
 
 [TestFixture]
 public class FieldTest
 {
-    [Test]
-    public void AddFigureToField()
+
+    public void CanMoveLowerBoundary()
     {
         var field = CreateField();
-        var shape = CreateRandomShape();
-
-        field.AddShape(shape);
-
-        Assert.That(field.Shapes.Contains(shape));
+        field.Size = Vector2.one*2;
+        field.Position = Vector2.zero;
+        Create
     }
-
     private Shape CreateRandomShape()
     {
+        
         return new Shape();
     }
 

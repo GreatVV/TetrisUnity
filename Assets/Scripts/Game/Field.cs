@@ -3,19 +3,47 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
-    public List<Shape> Shapes { get; private set; }
+    public Shape ActiveShape;
+    public float DefaultVelocity = 10;
+    public Vector2 Position;
+    public ShapeFactory ShapeFactory;
+    public Vector2 Size;
+    public List<Square> Squares = new List<Square>();
+    public float Velocity;
 
     private void Init()
     {
-        if (Shapes == null)
+        CreateNewShape();
+    }
+
+    public void CreateNewShape()
+    {
+        ActiveShape = ShapeFactory.CreateRandom();
+        ActiveShape.transform.SetParent(transform);
+        ActiveShape.transform.position = Position + new Vector2(Size.x/2, Size.y);
+    }
+
+    public void Start()
+    {
+        Init();
+        Velocity = DefaultVelocity;
+    }
+
+    public void Update()
+    {
+        var currentPosition = ActiveShape.transform.position;
+        var newPosition = currentPosition + Vector3.down * Time.deltaTime * Velocity;
+        
+        if (CanMove(newPosition))
         {
-            Shapes = new List<Shape>();
+            Squares.AddRange(ActiveShape.Squares);
+            CreateNewShape();
         }
     }
 
-    public void AddShape(Shape shape)
+    private bool CanMove(Vector3 newPosition)
     {
-        Init();
-        Shapes.Add(shape);
+        //два условия остановки: нижняя граница поля, снизу есть клетки
+        return false;
     }
 }
