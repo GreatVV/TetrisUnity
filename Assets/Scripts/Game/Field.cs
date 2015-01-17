@@ -34,16 +34,20 @@ public class Field : MonoBehaviour
         var currentPosition = ActiveShape.transform.position;
         var newPosition = currentPosition + Vector3.down * Time.deltaTime * Velocity;
         
-        if (CanMove(newPosition))
+        if (CanMove(ActiveShape, newPosition))
         {
             Squares.AddRange(ActiveShape.Squares);
             CreateNewShape();
         }
     }
 
-    private bool CanMove(Vector3 newPosition)
+    public static bool CanMove(Shape shape, Vector3 newPosition)
     {
+        var currentPosition = shape.transform.position;
+
         //два условия остановки: нижняя граница поля, снизу есть клетки
+        //lowerBondary
+        //hasSquares
         return false;
     }
 }

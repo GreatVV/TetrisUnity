@@ -4,22 +4,32 @@ using UnityEngine;
 [TestFixture]
 public class FieldTest
 {
-
+    [Test]
     public void CanMoveLowerBoundary()
     {
         var field = CreateField();
         field.Size = Vector2.one*2;
         field.Position = Vector2.zero;
-        Create
-    }
-    private Shape CreateRandomShape()
-    {
+
+        var shape = CreateShape();
+        shape.transform.position = new Vector3(0,1);
         
-        return new Shape();
+        var nextPosition = new Vector2(0, -1);
+        
+        var canMove = Field.CanMove(shape, nextPosition);
+
+        Assert.IsFalse(canMove);
+
+    }
+    private Shape CreateShape()
+    {
+        var shapeFactory = Object.FindObjectOfType<ShapeFactory>();
+        return shapeFactory.CreateSquare();
     }
 
     private Field CreateField()
     {
-        return new Field();
+        var field = Object.FindObjectOfType<Field>();
+        return field;
     }
 }
