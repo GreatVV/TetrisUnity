@@ -21,7 +21,7 @@ public class Field : MonoBehaviour
     {
         ActiveShape = ShapeFactory.CreateRandom();
         ActiveShape.transform.SetParent(transform);
-        ActiveShape.transform.position = Position + new Vector2(Size.x / 2, Size.y);
+        ActiveShape.transform.position = Position + new Vector2(Size.x/2, Size.y);
     }
 
     public void Start()
@@ -33,7 +33,7 @@ public class Field : MonoBehaviour
     public void Update()
     {
         var currentPosition = ActiveShape.transform.position;
-        var newPosition = currentPosition + Vector3.down * Time.deltaTime * Velocity;
+        var newPosition = currentPosition + Vector3.down*Time.deltaTime*Velocity;
 
         if (CanMove(ActiveShape, newPosition, this))
         {
@@ -57,14 +57,18 @@ public class Field : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            //TODO сделать проверку на границы
-            ActiveShape.transform.position += Vector3.left;
+            if (ActiveShape.transform.position.x > 0)
+            {
+                ActiveShape.transform.position += Vector3.left;
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            //TODO сделать проверку на границы
-            ActiveShape.transform.position += Vector3.right;
+            if (ActiveShape.transform.position.x < Size.x)
+            {
+                ActiveShape.transform.position += Vector3.right;
+            }
         }
     }
 
