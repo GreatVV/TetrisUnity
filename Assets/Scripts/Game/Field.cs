@@ -69,6 +69,11 @@ public class Field : MonoBehaviour
             {
                 ActiveShape.transform.position += Vector3.right;
             }
+        } 
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            //ActiveShape.transform.rotation = Quaternion.Euler(0, 0, ActiveShape.transform.rotation.z + 90);
+            ActiveShape.transform.Rotate(0, 0, 90);
         }
     }
 
