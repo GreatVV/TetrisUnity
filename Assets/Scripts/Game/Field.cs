@@ -6,9 +6,11 @@ public class Field : MonoBehaviour
 {
     public Shape ActiveShape;
     public float DefaultVelocity = 10;
+    public Vector3 NewPosition;
     public Vector2 Position;
     public ShapeFactory ShapeFactory;
     public Vector2 Size;
+    public GameObject SpawnPosition;
     public List<Square> Squares = new List<Square>();
     public float Velocity;
 
@@ -23,6 +25,7 @@ public class Field : MonoBehaviour
         ActiveShape.transform.SetParent(transform);
         ActiveShape.transform.position = Position + new Vector2(Size.x/2, Size.y);
         Velocity = DefaultVelocity;
+        NewPosition = ActiveShape.transform.position + new Vector3(0, -1);
     }
 
     public void Start()
@@ -33,11 +36,15 @@ public class Field : MonoBehaviour
     public void Update()
     {
         var currentPosition = ActiveShape.transform.position;
-        var newPosition = currentPosition + Vector3.down*Time.deltaTime*Velocity;
 
-        if (CanMove(ActiveShape, newPosition, this))
+        if (currentPosition.y < NewPosition.y)
         {
-            ActiveShape.transform.position = newPosition;
+            NewPosition = currentPosition + new Vector3(0, -1);
+        }
+
+        if (CanMove(ActiveShape, NewPosition, this))
+        {
+            ActiveShape.transform.position = currentPosition + Vector3.down*Time.deltaTime*Velocity;
         }
         else
         {
@@ -63,38 +70,38 @@ public class Field : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (ActiveShape.transform.position.x < Size.x)
             {
                 ActiveShape.transform.position += Vector3.right;
             }
         }
-        if (Input.GetKeyUp(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             //ActiveShape.transform.rotation = Quaternion.Euler(0, 0, ActiveShape.transform.rotation.z + 90);
             ActiveShape.transform.Rotate(0, 0, 90);
             //как я понял он считает границу фигуры по minY и если мы крутим фигуру, то minY остается на том же квадрате. 
             //значит надо при кручении менять minY.
             // ActiveShape.MinY = Squares.Min(x => x.transform.localPosition.y - x.Size.y/2f);
-        } 
+        }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            Velocity = 100; 
+            Velocity = 100;
         }
         if (Input.GetKeyUp(KeyCode.DownArrow))
         {
             Velocity = DefaultVelocity;
-        } 
+        }
     }
 
     public static bool CanMove(Shape shape, Vector3 newPosition, Field field)
     {
-        var lowerBound = newPosition.y + shape.MinY;
+        var lowerBound = newPosition.y+ shape.MinY;
 
         //два условия остановки: нижняя граница поля, снизу есть клетки
         //lowerBondary
-        if (lowerBound < field.Position.y)
+        if (lowerBound < 0)
         {
             return false;
         }

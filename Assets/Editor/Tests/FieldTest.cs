@@ -28,7 +28,7 @@ public class FieldTest
     {
         var field = new GameObject("Field", typeof (Field)).GetComponent<Field>();
         field.Size = Vector2.one * 2;
-        field.Position = Vector2.zero;
+       // field.Position = Vector2.zero;
         return field;
     }
 }
