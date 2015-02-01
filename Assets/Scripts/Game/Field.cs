@@ -22,12 +22,12 @@ public class Field : MonoBehaviour
         ActiveShape = ShapeFactory.CreateRandom();
         ActiveShape.transform.SetParent(transform);
         ActiveShape.transform.position = Position + new Vector2(Size.x/2, Size.y);
+        Velocity = DefaultVelocity;
     }
 
     public void Start()
     {
         Init();
-        Velocity = DefaultVelocity;
     }
 
     public void Update()
@@ -69,12 +69,23 @@ public class Field : MonoBehaviour
             {
                 ActiveShape.transform.position += Vector3.right;
             }
-        } 
+        }
         if (Input.GetKeyUp(KeyCode.UpArrow))
         {
             //ActiveShape.transform.rotation = Quaternion.Euler(0, 0, ActiveShape.transform.rotation.z + 90);
             ActiveShape.transform.Rotate(0, 0, 90);
+            //как я понял он считает границу фигуры по minY и если мы крутим фигуру, то minY остается на том же квадрате. 
+            //значит надо при кручении менять minY.
+            // ActiveShape.MinY = Squares.Min(x => x.transform.localPosition.y - x.Size.y/2f);
+        } 
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            Velocity = 100; 
         }
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            Velocity = DefaultVelocity;
+        } 
     }
 
     public static bool CanMove(Shape shape, Vector3 newPosition, Field field)
