@@ -10,7 +10,8 @@ public class Field : MonoBehaviour
     public Vector2 Position;
     public ShapeFactory ShapeFactory;
     public Vector2 Size;
-    public GameObject SpawnPosition;
+
+    public Vector2 SpawnPosition;
     public List<Square> Squares = new List<Square>();
     public float Velocity;
 
@@ -23,7 +24,7 @@ public class Field : MonoBehaviour
     {
         ActiveShape = ShapeFactory.CreateRandom();
         ActiveShape.transform.SetParent(transform);
-        ActiveShape.transform.position = Position + new Vector2(Size.x/2, Size.y);
+        ActiveShape.transform.position = SpawnPosition;
         Velocity = DefaultVelocity;
         NewPosition = ActiveShape.transform.position + new Vector3(0, -1);
     }
@@ -111,15 +112,18 @@ public class Field : MonoBehaviour
         //проверить если в таких координатах уже квадрат - если есть значит сказать что нельзя двигаться
         foreach (var square in shape.Squares)
         {
-            var position = new Vector3(
-                Mathf.RoundToInt(square.transform.localPosition.x + newPosition.x),
-                Mathf.RoundToInt(square.transform.localPosition.y + newPosition.y));
-
-            var intersect =
-                field.Squares.Any(x => x.transform.position.y == position.y && x.transform.position.x == position.x);
-            if (intersect)
+            foreach (var point in square.Points)
             {
-                return false;
+                var position = new Vector3(
+                    Mathf.RoundToInt(point.x + newPosition.x),
+                    Mathf.RoundToInt(point.y + newPosition.y));
+
+                var intersect =
+                    field.Squares.Any(x => x.transform.position.y == position.y && x.transform.position.x == position.x);
+                if (intersect)
+                {
+                    return false;
+                }
             }
         }
 
