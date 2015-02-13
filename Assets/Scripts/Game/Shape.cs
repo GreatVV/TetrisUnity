@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class Shape : MonoBehaviour
 {
-   
-    public List<Square> Squares = new List<Square>();
     public float MinY;
+    public List<Square> Squares = new List<Square>();
     // Use thisfor initialization
     private void Start()
     {
-        
     }
 
     // Update is called once per frame
     private void Update()
     {
-        
     }
 
     public void AddSquare(Square square, Vector2 position)
