@@ -290,9 +290,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActiveShape: {fileID: 0}
   DefaultVelocity: 10
+  NewPosition: {x: 0, y: 0, z: 0}
   Position: {x: 0, y: 0}
   ShapeFactory: {fileID: 632039460}
   Size: {x: 10, y: 20}
+  SpawnPosition: {x: 0, y: 0}
   Squares: []
   Velocity: 0
 --- !u!4 &1685707745

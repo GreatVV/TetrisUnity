@@ -65,7 +65,15 @@ public class Field : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (ActiveShape.transform.position.x > 0)
+            var flag = true;
+            foreach (var square in ActiveShape.Squares)
+            {
+                if (Mathf.RoundToInt(square.LeftPoint.x) <= 0)
+                {
+                    flag = false;
+                }
+            }
+            if (flag)
             {
                 ActiveShape.transform.position += Vector3.left;
             }
@@ -73,18 +81,22 @@ public class Field : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (ActiveShape.transform.position.x < Size.x)
+            var flag = true;
+            foreach (var square in ActiveShape.Squares)
+            {
+                if (Mathf.RoundToInt(square.LeftPoint.x) >= Size.x)
+                {
+                    flag = false;
+                }
+            }
+            if (flag)
             {
                 ActiveShape.transform.position += Vector3.right;
             }
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            //ActiveShape.transform.rotation = Quaternion.Euler(0, 0, ActiveShape.transform.rotation.z + 90);
             ActiveShape.transform.Rotate(0, 0, 90);
-            //как я понял он считает границу фигуры по minY и если мы крутим фигуру, то minY остается на том же квадрате. 
-            //значит надо при кручении менять minY.
-            // ActiveShape.MinY = Squares.Min(x => x.transform.localPosition.y - x.Size.y/2f);
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -101,7 +113,13 @@ public class Field : MonoBehaviour
         var lowerBound = newPosition.y + shape.MinY;
 
         //два условия остановки: нижняя граница поля, снизу есть клетки
-        //lowerBondary
+        /* foreach (var square in shape.Squares)
+        {
+            if (Mathf.RoundToInt(square.BottomPoint.y) == 0)
+            {
+                return false;
+            }
+        }*/
         if (lowerBound < 0)
         {
             return false;
