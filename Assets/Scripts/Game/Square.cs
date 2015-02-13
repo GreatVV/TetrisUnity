@@ -19,22 +19,22 @@ public class Square : MonoBehaviour
 
     private Vector3 BottomPoint(Vector3 diff)
     {
-        return RoundVector(transform.TransformPoint(new Vector3(0, -0.5f) + diff));
+        return RoundVector(transform.TransformPoint(new Vector3(0, -0.5f)) + diff);
     }
 
     private Vector3 UpPoint(Vector3 diff)
     {
-        return RoundVector(transform.TransformPoint(new Vector3(0, 0.5f) + diff));
+        return RoundVector(transform.TransformPoint(new Vector3(0, 0.5f)) + diff);
     }
 
     private Vector3 LeftPoint(Vector3 diff)
     {
-        return RoundVector(transform.TransformPoint(new Vector3(-0.5f, 0f) + diff));
+        return RoundVector(transform.TransformPoint(new Vector3(-0.5f, 0f)) + diff);
     }
 
     private Vector3 RightPoint(Vector3 diff)
     {
-        return RoundVector(transform.TransformPoint(new Vector3(0.5f, 0f) + diff));
+        return RoundVector(transform.TransformPoint(new Vector3(0.5f, 0f)) + diff);
     }
 
     private Vector3 RoundVector(Vector3 vector)
