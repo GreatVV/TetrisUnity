@@ -45,16 +45,7 @@ public class Field : MonoBehaviour
         }
         else
         {
-            var newSquares = ActiveShape.Squares;
-            foreach (var newSquare in newSquares)
-            {
-                var position = newSquare.transform.position;
-                newSquare.transform.position = new Vector3(
-                    Mathf.RoundToInt(position.x),
-                    Mathf.RoundToInt(position.y),
-                    Mathf.RoundToInt(position.z));
-            }
-
+            ActiveShape.transform.position = newPosition.RoundToInt();
             Squares.AddRange(ActiveShape.Squares);
             CreateNewShape();
         }
