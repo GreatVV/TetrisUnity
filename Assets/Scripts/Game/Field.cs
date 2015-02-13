@@ -52,7 +52,8 @@ public class Field : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (CanMove(ActiveShape, currentPosition + Vector3.left, this))
+            var leftPos = currentPosition + Vector3.left;
+            if (CanMove(ActiveShape, leftPos, this) && leftPos.x >= 0)
             {
                 ActiveShape.transform.position += Vector3.left;
             }
@@ -60,7 +61,8 @@ public class Field : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (CanMove(ActiveShape, currentPosition + Vector3.right, this))
+            var rightPos = currentPosition + Vector3.right;
+            if (CanMove(ActiveShape, rightPos, this) && rightPos.x < Size.x)
             {
                 ActiveShape.transform.position += Vector3.right;
             }
@@ -103,7 +105,7 @@ public class Field : MonoBehaviour
         //пройтись по всем квадратам в фигуре и подсчитать его новые целочисленные координаты
         //проверить если в таких координатах уже квадрат - если есть значит сказать что нельзя двигаться
         bool any = false;
-        foreach (Square square in shape.Squares)
+        foreach (Square square in shape.Squares.Where(x=>x.Position.x >= shape.MinX(diff) && x.Position.x <= shape.MaxX(diff)))
         {
             foreach (var point in field.Squares)
             {

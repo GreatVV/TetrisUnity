@@ -19,22 +19,22 @@ public class Square : MonoBehaviour
 
     private Vector3 BottomPoint(Vector3 diff)
     {
-        return RoundVector(transform.TransformPoint(new Vector3(0, -0.5f)) + diff);
+        return RoundVector(transform.TransformPoint(new Vector3(0, -0.25f)) + diff);
     }
 
     private Vector3 UpPoint(Vector3 diff)
     {
-        return RoundVector(transform.TransformPoint(new Vector3(0, 0.5f)) + diff);
+        return RoundVector(transform.TransformPoint(new Vector3(0, 0.25f)) + diff);
     }
 
     private Vector3 LeftPoint(Vector3 diff)
     {
-        return RoundVector(transform.TransformPoint(new Vector3(-0.5f, 0f)) + diff);
+        return RoundVector(transform.TransformPoint(new Vector3(-0.25f, 0f)) + diff);
     }
 
     private Vector3 RightPoint(Vector3 diff)
     {
-        return RoundVector(transform.TransformPoint(new Vector3(0.5f, 0f)) + diff);
+        return RoundVector(transform.TransformPoint(new Vector3(0.25f, 0f)) + diff);
     }
 
     private Vector3 RoundVector(Vector3 vector)
@@ -51,6 +51,18 @@ public class Square : MonoBehaviour
     {
         return square.Position == BottomPoint(diff) || square.Position == LeftPoint(diff) ||
                square.Position == RightPoint(diff) || square.Position == UpPoint(diff);
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(BottomPoint(Vector3.zero), 0.1f);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(UpPoint(Vector3.zero), 0.1f);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(LeftPoint(Vector3.zero), 0.1f);
+        Gizmos.color = Color.black;
+        Gizmos.DrawSphere(RightPoint(Vector3.zero), 0.1f);
     }
 
     public float MinX(Vector3 diff)
