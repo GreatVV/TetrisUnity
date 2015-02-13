@@ -4,25 +4,32 @@ using UnityEngine;
 
 public class Shape : MonoBehaviour
 {
-    public float MinY;
     public List<Square> Squares = new List<Square>();
-    // Use thisfor initialization
-    private void Start()
+
+    public float MinY(Vector3 diff)
     {
+        return Squares.Min(x => x.MinY(diff));
     }
 
-    // Update is called once per frame
-    private void Update()
+    public float MinX(Vector3 diff)
     {
+        return Squares.Min(x => x.MinX(diff));
+    }
+
+    public float MaxX(Vector3 diff)
+    {
+        return Squares.Max(x => x.MaxX(diff));
+    }
+
+    public float MaxY(Vector3 diff)
+    {
+        return Squares.Max(x => x.MaxY(diff));
     }
 
     public void AddSquare(Square square, Vector2 position)
     {
         square.transform.SetParent(transform, false);
         square.transform.localPosition = position;
-
         Squares.Add(square);
-
-        MinY = Squares.Min(x => x.transform.localPosition.y - x.Size.y/2f);
     }
 }

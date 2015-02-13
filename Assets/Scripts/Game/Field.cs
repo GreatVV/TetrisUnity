@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Field : MonoBehaviour
 {
     public Shape ActiveShape;
     public float DefaultVelocity = 10;
-    public Vector3 NewPosition;
+    
     public Vector2 Position;
     public ShapeFactory ShapeFactory;
     public Vector2 Size;
@@ -24,7 +25,7 @@ public class Field : MonoBehaviour
         ActiveShape.transform.SetParent(transform);
         ActiveShape.transform.position = SpawnPosition;
         Velocity = DefaultVelocity;
-        NewPosition = ActiveShape.transform.position + new Vector3(0, -1);
+        
     }
 
     public void Start()
@@ -36,16 +37,11 @@ public class Field : MonoBehaviour
     public void Update()
     {
         var currentPosition = ActiveShape.transform.position;
+        var newPosition = currentPosition + Vector3.down*Time.deltaTime*Velocity;
 
-
-        if (currentPosition.y < NewPosition.y)
+        if (CanMove(ActiveShape, newPosition, this))
         {
-            NewPosition = currentPosition + new Vector3(0, -1);
-        }
-
-        if (CanMove(ActiveShape, NewPosition, this))
-        {
-            ActiveShape.transform.position = currentPosition + Vector3.down*Time.deltaTime*Velocity;
+            ActiveShape.transform.position = newPosition;
         }
         else
         {
@@ -65,15 +61,7 @@ public class Field : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            var flag = true;
-            foreach (var square in ActiveShape.Squares)
-            {
-                if (Mathf.RoundToInt(square.LeftPoint.x) <= 0)
-                {
-                    flag = false;
-                }
-            }
-            if (flag)
+            if (CanMove(ActiveShape, currentPosition + Vector3.left, this))
             {
                 ActiveShape.transform.position += Vector3.left;
             }
@@ -81,22 +69,18 @@ public class Field : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            var flag = true;
-            foreach (var square in ActiveShape.Squares)
-            {
-                if (Mathf.RoundToInt(square.LeftPoint.x) >= Size.x)
-                {
-                    flag = false;
-                }
-            }
-            if (flag)
+            if (CanMove(ActiveShape, currentPosition + Vector3.right, this))
             {
                 ActiveShape.transform.position += Vector3.right;
             }
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            ActiveShape.transform.Rotate(0, 0, 90);
+            var rotationAngle = new Vector3(0, 0, 90);
+            if (CanRotate(rotationAngle, ActiveShape, this))
+            {
+                ActiveShape.transform.Rotate(0, 0, 90);
+            }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -108,18 +92,17 @@ public class Field : MonoBehaviour
         }
     }
 
+    private static bool CanRotate(Vector3 rotationAngle, Shape activeShape, Field field)
+    {
+        return true;
+    }
+
     public static bool CanMove(Shape shape, Vector3 newPosition, Field field)
     {
-        var lowerBound = newPosition.y + shape.MinY;
+        var diff = newPosition - shape.transform.position;
+        var lowerBound = shape.MinY(diff);
 
         //два условия остановки: нижняя граница поля, снизу есть клетки
-        /* foreach (var square in shape.Squares)
-        {
-            if (Mathf.RoundToInt(square.BottomPoint.y) == 0)
-            {
-                return false;
-            }
-        }*/
         if (lowerBound < 0)
         {
             return false;
@@ -128,46 +111,19 @@ public class Field : MonoBehaviour
         //алгоритм
         //пройтись по всем квадратам в фигуре и подсчитать его новые целочисленные координаты
         //проверить если в таких координатах уже квадрат - если есть значит сказать что нельзя двигаться
-        foreach (var square in shape.Squares)
+        bool any = false;
+        foreach (Square square in shape.Squares)
         {
             foreach (var point in field.Squares)
             {
-                if (Mathf.RoundToInt(point.LeftPoint.x) == Mathf.RoundToInt(square.LeftPoint.x) &&
-                    Mathf.RoundToInt(point.LeftPoint.y) == Mathf.RoundToInt(square.LeftPoint.y))
+                if (square.Intersect(point, diff))
                 {
-                    return false;
-                }
-                if (Mathf.RoundToInt(point.BottomPoint.x) == Mathf.RoundToInt(square.BottomPoint.x) &&
-                    Mathf.RoundToInt(point.BottomPoint.y) == Mathf.RoundToInt(square.BottomPoint.y))
-                {
-                    return false;
-                }
-                if (Mathf.RoundToInt(point.RightPoint.x) == Mathf.RoundToInt(square.RightPoint.x) &&
-                    Mathf.RoundToInt(point.RightPoint.y) == Mathf.RoundToInt(square.RightPoint.y))
-                {
-                    return false;
+                    any = true;
+                    break;
                 }
             }
         }
-        /*
-        foreach (var square in shape.Squares)
-        {
-            foreach (var point in square.Points)
-            {
-                var position = new Vector3(
-                    Mathf.RoundToInt(point.x + newPosition.x),
-                    Mathf.RoundToInt(point.y + newPosition.y));
-
-                var intersect =
-                    field.Squares.Any(x => x.transform.position.y == position.y && x.transform.position.x == position.x);
-                if (intersect)
-                {
-                    return false;
-                }
-            }
-        }
-        */
-
-        return true;
+        return !any;
+       
     }
 }

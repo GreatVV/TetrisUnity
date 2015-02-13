@@ -3,28 +3,68 @@ using UnityEngine;
 
 public class Square : MonoBehaviour
 {
-    public Vector2 BottomPoint;
-    public Vector2 LeftPoint;
-    public List<Vector2> Points;
-    public Vector2 RightPoint;
     public Vector2 Size = Vector2.one;
 
-    public Vector2 Position
+    public Vector3 Position
     {
-        get { return transform.position; }
-        set { transform.position = value; }
+        get
+        {
+            return transform.position;
+        }
+        set
+        {
+            transform.position = value;
+        }
     }
 
-    // Use this for initialization
-    private void Start()
+    private Vector3 BottomPoint(Vector3 diff)
     {
+        return RoundVector(transform.TransformPoint(new Vector3(0, -0.5f) + diff));
     }
 
-    // Update is called once per frame
-    private void Update()
-    {   
-        LeftPoint = new Vector2(transform.position.x - 0.5f, transform.position.y);
-        BottomPoint = new Vector2(transform.position.x, transform.position.y - 0.5f);
-        RightPoint = new Vector2(transform.position.x + 0.5f, transform.position.y);
+    private Vector3 UpPoint(Vector3 diff)
+    {
+        return RoundVector(transform.TransformPoint(new Vector3(0, 0.5f) + diff));
+    }
+
+    private Vector3 LeftPoint(Vector3 diff)
+    {
+        return RoundVector(transform.TransformPoint(new Vector3(-0.5f, 0f) + diff));
+    }
+
+    private Vector3 RightPoint(Vector3 diff)
+    {
+        return RoundVector(transform.TransformPoint(new Vector3(0.5f, 0f) + diff));
+    }
+
+    private Vector3 RoundVector(Vector3 vector)
+    {
+        return new Vector3(Mathf.RoundToInt(vector.x), Mathf.RoundToInt(vector.y), Mathf.RoundToInt(vector.z));
+    }
+
+    public float MinY(Vector3 diff)
+    {
+        return Mathf.Min(BottomPoint(diff).y, UpPoint(diff).y, LeftPoint(diff).y, RightPoint(diff).y);
+    }
+
+    public bool Intersect(Square square, Vector3 diff)
+    {
+        return square.Position == BottomPoint(diff) || square.Position == LeftPoint(diff) ||
+               square.Position == RightPoint(diff) || square.Position == UpPoint(diff);
+    }
+
+    public float MinX(Vector3 diff)
+    {
+        return Mathf.Min(BottomPoint(diff).x, UpPoint(diff).x, LeftPoint(diff).x, RightPoint(diff).x);
+    }
+
+    public float MaxX(Vector3 diff)
+    {
+        return Mathf.Max(BottomPoint(diff).x, UpPoint(diff).x, LeftPoint(diff).x, RightPoint(diff).x);
+    }
+
+    public float MaxY(Vector3 diff)
+    {
+        return Mathf.Max(BottomPoint(diff).y, UpPoint(diff).y, LeftPoint(diff).y, RightPoint(diff).y);
     }
 }

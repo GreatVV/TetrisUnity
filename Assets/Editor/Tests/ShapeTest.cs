@@ -18,7 +18,7 @@ public class ShapeTest
 
         shape.AddSquare(square, new Vector2(0, -0.5f));
 
-        Assert.AreEqual(expectedMinY, shape.MinY);
+        Assert.AreEqual(expectedMinY, shape.MinY(Vector3.zero));
     }
 
     private Square CreateSquare()
