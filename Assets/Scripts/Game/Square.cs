@@ -19,29 +19,24 @@ public class Square : MonoBehaviour
 
     private Vector3 BottomPoint(Vector3 diff)
     {
-        return RoundVector(transform.TransformPoint(new Vector3(0, -0.25f)) + diff);
+        return (transform.TransformPoint(new Vector3(0, -0.4f)) + diff);
     }
 
     private Vector3 UpPoint(Vector3 diff)
     {
-        return RoundVector(transform.TransformPoint(new Vector3(0, 0.25f)) + diff);
+        return (transform.TransformPoint(new Vector3(0, 0.4f)) + diff);
     }
 
     private Vector3 LeftPoint(Vector3 diff)
     {
-        return RoundVector(transform.TransformPoint(new Vector3(-0.25f, 0f)) + diff);
+        return (transform.TransformPoint(new Vector3(-0.4f, 0f)) + diff);
     }
 
     private Vector3 RightPoint(Vector3 diff)
     {
-        return RoundVector(transform.TransformPoint(new Vector3(0.25f, 0f)) + diff);
+        return (transform.TransformPoint(new Vector3(0.4f, 0f)) + diff);
     }
-
-    private Vector3 RoundVector(Vector3 vector)
-    {
-        return new Vector3(Mathf.RoundToInt(vector.x), Mathf.RoundToInt(vector.y), Mathf.RoundToInt(vector.z));
-    }
-
+  
     public float MinY(Vector3 diff)
     {
         return Mathf.Min(BottomPoint(diff).y, UpPoint(diff).y, LeftPoint(diff).y, RightPoint(diff).y);
@@ -49,8 +44,8 @@ public class Square : MonoBehaviour
 
     public bool Intersect(Square square, Vector3 diff)
     {
-        return square.Position == BottomPoint(diff) || square.Position == LeftPoint(diff) ||
-               square.Position == RightPoint(diff) || square.Position == UpPoint(diff);
+        var bounds = (square.collider2D as BoxCollider2D).bounds;
+        return  bounds.Contains(BottomPoint(diff)) || bounds.Contains(LeftPoint(diff)) || bounds.Contains(RightPoint(diff)) || bounds.Contains(UpPoint(diff));
     }
 
     void OnDrawGizmos()
@@ -78,19 +73,5 @@ public class Square : MonoBehaviour
     public float MaxY(Vector3 diff)
     {
         return Mathf.Max(BottomPoint(diff).y, UpPoint(diff).y, LeftPoint(diff).y, RightPoint(diff).y);
-    }
-}
-
-public static class Vector3Extensions
-{
-    public static Vector3 RoundToInt(this Vector3 vector)
-    {
-        var clamped = new Vector3
-                      {
-                          x = Mathf.RoundToInt(vector.x),
-                          y = Mathf.RoundToInt(vector.y),
-                          z = Mathf.RoundToInt(vector.z)
-                      };
-        return clamped;
     }
 }

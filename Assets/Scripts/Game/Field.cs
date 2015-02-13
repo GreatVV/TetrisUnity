@@ -30,7 +30,7 @@ public class Field : MonoBehaviour
 
     public void Start()
     {
-        SpawnPosition = new Vector2(Size.x/2, Size.y);
+       SpawnPosition = new Vector2(Size.x/2, Size.y);
         Init();
     }
 
@@ -45,6 +45,7 @@ public class Field : MonoBehaviour
         }
         else
         {
+            //set to last possible
             ActiveShape.transform.position = newPosition.RoundToInt();
             Squares.AddRange(ActiveShape.Squares);
             CreateNewShape();
@@ -87,7 +88,11 @@ public class Field : MonoBehaviour
 
     private static bool CanRotate(Vector3 rotationAngle, Shape activeShape, Field field)
     {
-        return true;
+        //write a check
+        activeShape.transform.Rotate(rotationAngle);
+        var canMove = CanMove(activeShape, activeShape.transform.position, field);
+        activeShape.transform.Rotate(rotationAngle * -1);
+        return canMove;
     }
 
     public static bool CanMove(Shape shape, Vector3 newPosition, Field field)

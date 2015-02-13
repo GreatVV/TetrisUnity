@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Game\Field.cs" />
      <Compile Include="Assets\Scripts\Game\Shape.cs" />
      <Compile Include="Assets\Scripts\Game\Square.cs" />
+     <Compile Include="Assets\Scripts\Game\Vector3Extensions.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\AssertionException.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\Assertions.cs" />
