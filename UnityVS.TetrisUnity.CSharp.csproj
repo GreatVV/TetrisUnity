@@ -7,16 +7,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{8959576D-6292-AADF-3EE5-CC63E9860387}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,6 +51,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\003 Drawing Lines\src\LinesGL.cs" />
+    <Compile Include="Assets\003 Drawing Lines\src\LinesGR.cs" />
+    <Compile Include="Assets\003 Drawing Lines\src\LinesLR.cs" />
     <Compile Include="Assets\Scripts\Game\Factory\ShapeFactory.cs" />
     <Compile Include="Assets\Scripts\Game\Field.cs" />
     <Compile Include="Assets\Scripts\Game\Shape.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunnerCallbackList.cs" />
     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunnerConfigurator.cs" />
     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestingAssets\CallTesting.cs" />
+    <None Include="Assets\003 Drawing Lines\src\BlackLine.shader" />
     <None Include="Assets\UnityTestTools\changelog.txt" />
     <None Include="Assets\UnityTestTools\LICENSE.txt" />
   </ItemGroup>

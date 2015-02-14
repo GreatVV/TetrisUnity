@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -48,6 +49,28 @@ public class Field : MonoBehaviour
             //set to last possible
             ActiveShape.transform.position = newPosition.RoundToInt();
             Squares.AddRange(ActiveShape.Squares);
+            //удаление линий
+            //надо пробежать по всем квадратам поля
+            //если 10 квадратов имеют одинаковые transform.postion.y
+            //удаляем все квадраты с такой transform.postion.y
+            //всем квадратам с transform.postion.y больше чем у этих квадратов transform.postion.y -=1
+            int[] lines = new int[20]; ;
+            for (int i = 0; i <= Squares.Count; i++ )
+            {
+                //Console.WriteLine(i); 
+                //Console.WriteLine(Squares[i].transform.position.y);
+                //Console.WriteLine(lines[Mathf.RoundToInt(Squares[0].transform.position.y)]);
+                lines[Mathf.RoundToInt(Squares[i].transform.position.y)]++;
+                if (lines[Mathf.RoundToInt(Squares[i].transform.position.y)] >= 10)
+                {
+                    for (int j = i; j >= i - 10; j--)
+                    {
+                        Console.WriteLine("Destroy(Squares[j])");
+                    }
+                    lines[Mathf.RoundToInt(Squares[i].transform.position.y)] = 0;
+                }
+
+            }
             CreateNewShape();
         }
 
