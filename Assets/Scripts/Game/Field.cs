@@ -55,7 +55,7 @@ public class Field : MonoBehaviour
             //удаляем все квадраты с такой transform.postion.y
             //всем квадратам с transform.postion.y больше чем у этих квадратов transform.postion.y -=1
             int[] lines = new int[20]; ;
-            for (int i = 0; i <= Squares.Count; i++ )
+            for (int i = 0; i < Squares.Count; i++ )
             {
                 //Console.WriteLine(i); 
                 //Console.WriteLine(Squares[i].transform.position.y);
@@ -63,9 +63,13 @@ public class Field : MonoBehaviour
                 lines[Mathf.RoundToInt(Squares[i].transform.position.y)]++;
                 if (lines[Mathf.RoundToInt(Squares[i].transform.position.y)] >= 10)
                 {
-                    for (int j = i; j >= i - 10; j--)
+                    for (int j = 0; j < Squares.Count; j++)
                     {
-                        Console.WriteLine("Destroy(Squares[j])");
+                        if (Squares[i].transform.position.y == Squares[j].transform.position.y)
+                        {
+                            DestroyObject(Squares[j]);
+                            Squares.RemoveAt(j);
+                        }
                     }
                     lines[Mathf.RoundToInt(Squares[i].transform.position.y)] = 0;
                 }
